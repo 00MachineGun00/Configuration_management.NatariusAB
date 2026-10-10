@@ -1,0 +1,400 @@
+Задание №1
+MacBook-Neo-Artem:Desktop sys$ grep -o '^[^:]*' /etc/passwd | sort
+_accessoryupdater
+_amavisd
+_analyticsd
+_aonsensed
+_appinstalld
+_appleevents
+_applepay
+_appowner
+_appserver
+_appstore
+_ard
+_assetcache
+_astris
+_atsserver
+_audiomxd
+_avbdeviced
+_avphidbridge
+_backgroundassets
+_biome
+_calendar
+_captiveagent
+_ces
+_clamav
+_cmiodalassistants
+_coreaudiod
+_coremediaiod
+_coreml
+_corespeechd
+_ctkd
+_cvmsroot
+_cvs
+_cyrus
+_darwindaemon
+_datadetectors
+_demod
+_devdocs
+_devicemgr
+_diagnosticservicesd
+_diskimagesiod
+_displaypolicyd
+_distnote
+_dovecot
+_dovenull
+_dpaudio
+_driverkit
+_eligibilityd
+_eppc
+_findmydevice
+_fpsd
+_ftp
+_gamecontrollerd
+_geod
+_hidd
+_iconservices
+_installassistant
+_installcoordinationd
+_installer
+_jabber
+_kadmin_admin
+_kadmin_changepw
+_knowledgegraphd
+_krb_anonymous
+_krb_changepw
+_krb_kadmin
+_krb_kerberos
+_krb_krbtgt
+_krbfast
+_krbtgt
+_launchservicesd
+_lda
+_locationd
+_logd
+_lp
+_mailman
+_mbsetupuser
+_mcxalr
+_mdnsresponder
+_mds_stores
+_mmaintenanced
+_mobileasset
+_mobilegestalthelper
+_modelmanagerd
+_mysql
+_naturallanguaged
+_nearbyd
+_netbios
+_netstatistics
+_networkd
+_neuralengine
+_notification_proxy
+_nsurlsessiond
+_oahd
+_ondemand
+_postfix
+_postgres
+_qtss
+_reportmemoryexception
+_reportsystemmemory
+_rmd
+_sandbox
+_screensaver
+_scsd
+_securityagent
+_sntpd
+_softwareupdate
+_spinandd
+_spotlight
+_sshd
+_svn
+_swtransparencyd
+_systemstatusd
+_taskgated
+_teamsserver
+_terminusd
+_timed
+_timezone
+_tokend
+_trustd
+_trustevaluationagent
+_unknown
+_update_sharing
+_usbmuxd
+_uucp
+_warmd
+_webauthserver
+_windowserver
+_www
+_wwwproxy
+_xserverdocs
+#
+# 
+# in single-user mode.  At other times this information is provided by
+# Note that this file is consulted directly only when the system is running
+# Open Directory.
+# Open Directory.
+# See the opendirectoryd(8) man page for additional information about
+# User Database
+##
+##
+daemon
+nobody
+root
+
+
+Задание №2
+MacBook-Neo-Artem:Desktop sys$ grep -E '^[a-z]' /etc/protocols | awk '{print $2, $1}' | sort -rn | head -n 5
+258 divert
+240 pfsync
+142 rohc
+141 wesp
+140 shim6
+
+
+Задание №3
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]; then
+    echo "Использование: $0 \"текст\"" >&2
+    exit 1
+fi
+
+text="$1"
+len=$(printf '%s' "$text" | wc -m | tr -d ' ')
+len=$((len))
+border=$(printf '+%*s+' "$((len + 2))" '' | tr ' ' '-')
+
+echo "$border"
+echo "| $text |"
+echo "$border"
+
+MacBook-Neo-Artem:pract1_3 sys$ ./banner "Hello from RTU MIREA"
++----------------------+
+| Hello from RTU MIREA |
++----------------------+
+
+
+Задание №4
+MacBook-Neo-Artem:pract1_3 sys$ cat > identifiers << 'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 1 ]; then
+>     echo "Использование: $0 <файл>" >&2
+>     exit 1
+> fi
+> grep -oE '[A-Za-z_][A-Za-z0-9_]*' "$1" | sort -u
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x identifiers 
+MacBook-Neo-Artem:pract1_3 sys$ cat > hello.c << 'EOF'
+> #include <stdio.h>
+> int main(void) {
+>     printf("hello world\n");
+>     return 0
+> }
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ ./identifiers hello.c
+h
+hello
+include
+int
+main
+n
+printf
+return
+stdio
+void
+worl
+
+
+Задание №5
+MacBook-Neo-Artem:~ sys$ cat >  reg <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 1 ]; then
+>     echo "Использование: $0 <файл>" >&2
+>     exit 1
+> fi
+> src="$1"
+> if [ ! -f "$src" ]; then
+>     echo "Ошибка: файл '$src' не найден" >&2
+>     exit 1
+> fi
+> name=$(basename "$src")
+> dest="/usr/local/bin/$name"
+> sudo cp "$src" "$dest"
+> sudo chmod 755 "$dest"
+> echo "Команда '$name' зарегистрирована в $dest"
+> EOF
+MacBook-Neo-Artem:~ sys$ chmod +x reg
+MacBook-Neo-Artem:~ sys$ ./reg banner
+Ошибка: файл 'banner' не найден
+MacBook-Neo-Artem:~ sys$ cd Desktop/РТУ\ МИРЭА/2
+-bash: cd: Desktop/РТУ МИРЭА/2: No such file or directory
+MacBook-Neo-Artem:~ sys$ cd Desktop/РТУ\ МИРЭА/2\ курс/ConfManagement/pract1_3/
+MacBook-Neo-Artem:pract1_3 sys$ ./reg banner
+Password:
+Команда 'banner' зарегистрирована в /usr/local/bin/banner
+MacBook-Neo-Artem:pract1_3 sys$ banner "test"
++------+
+| test |
++------+
+
+
+Задание №6
+MacBook-Neo-Artem:pract1_3 sys$ cat > check_comment <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 1 ]; then
+>     echo "Использование: $0 <директория>" >&2
+>     exit 1
+> fi
+> dir="$1"
+> find "$dir" -type f \( -name '*.c' -o -name '*.js' -o -name '*.py' \) -print0 |
+> while IFS= read -r -d '' file; do
+>     first_line=$(head -n 1 "$file")
+>     if [[ "$first_line" =~ ^[[:space:]]*(//|/\*|#) ]]; then
+>         echo "[OK]   $file"
+>     else
+>         echo "[НЕТ]  $file"
+>     fi
+> done
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x check_comment
+MacBook-Neo-Artem:pract1_3 sys$ mkdir -p test_6 && cd test_6
+MacBook-Neo-Artem:test_6 sys$ printf '// коммент\nint main() { return 0; }\n' > a.c
+MacBook-Neo-Artem:test_6 sys$ printf 'console.log("hi");\n' > b.js
+MacBook-Neo-Artem:test_6 sys$ printf '# коммент\nprint("hi")\n' > c.py
+MacBook-Neo-Artem:test_6 sys$ cd ..
+MacBook-Neo-Artem:pract1_3 sys$ ./check_comment test_6
+[OK]   test_6/a.c
+[OK]   test_6/c.py
+[НЕТ]  test_6/b.js
+MacBook-Neo-Artem:pract1_3 sys$ 
+
+
+Задание №7
+MacBook-Neo-Artem:pract1_3 sys$ cat > find_dups <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 1 ]; then
+>     echo "Использование: $0 <директория>" >&2
+>     exit 1
+> fi
+> dir="$1"
+> if command -v md5sum >/dev/null 2>&1; then
+>     hash_cmd="md5sum"
+> elif command -v md5 >/dev/null 2>&1; then
+>     hash_cmd="md5 -r"
+> else
+>     echo "Не найдена команда хеширования" >&2
+>     exit 1
+> fi
+> find "$dir" -type f -exec $hash_cmd {} + | sort | awk '
+> {
+>     hash = $1
+>     $1 = ""
+>     file = substr($0, 2)
+>     if (hash == prev_hash) {
+>         if (!printed) { print prev_file; printed = 1 }
+>         print file
+>     } else { printed = 0 }
+>     prev_hash = hash
+>     prev_file = file
+> }'
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ 
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x find_dups
+MacBook-Neo-Artem:pract1_3 sys$ mkdir -p test7 && cd test7
+MacBook-Neo-Artem:test7 sys$ echo "same" > a.txt; echo "same" > b.txt; echo "diff" > c.txt
+MacBook-Neo-Artem:test7 sys$ cd ..
+MacBook-Neo-Artem:pract1_3 sys$ ./find_dups test7
+test7/a.txt
+test7/b.txt
+
+
+Задание №8
+MacBook-Neo-Artem:pract1_3 sys$ cat > archive_ext <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 3 ]; then
+>     echo "Использование: $0 <директория> <расширение> <архив.tar>" >&2
+>     exit 1
+> fi
+> dir="$1"; ext="$2"; archive="$3"
+> files=()
+> while IFS= read -r -d '' f; do files+=("$f"); done < <(find "$dir" -type f -name "*.$ext" -print0)
+> if [ ${#files[@]} -eq 0 ]; then
+>     echo "Файлы с расширением .$ext не найдены" >&2
+>     exit 1
+> fi
+> tar -cvf "$archive" "${files[@]}"
+> echo "Архив '$archive' создан"
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ 
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x archive_ext
+MacBook-Neo-Artem:pract1_3 sys$ mkdir -p test8 && cd test8
+MacBook-Neo-Artem:test8 sys$ echo "int main(){}" > a.c; echo "void f(){}" > b.c; echo "hi" > c.txt
+MacBook-Neo-Artem:test8 sys$ cd ..
+MacBook-Neo-Artem:pract1_3 sys$ ./archive_ext test8 c test8_c.tar
+a test8/a.c
+a test8/b.c
+Архив 'test8_c.tar' создан
+MacBook-Neo-Artem:pract1_3 sys$ tar -tf test8_c.tar
+test8/a.c
+test8/b.c
+
+
+Задание №9
+MacBook-Neo-Artem:pract1_3 sys$ cat > spaces2tabs <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 2 ]; then
+>     echo "Использование: $0 <вход> <выход>" >&2
+>     exit 1
+> fi
+> input="$1"; output="$2"
+> if [ ! -f "$input" ]; then
+>     echo "Ошибка: файл '$input' не найден" >&2
+>     exit 1
+> fi
+> TAB=$(printf '\t')
+> sed "s/    /$TAB/g" "$input" > "$output"
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ 
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x spaces2tabs
+MacBook-Neo-Artem:pract1_3 sys$ printf 'a    b    c\n' > in.txt
+MacBook-Neo-Artem:pract1_3 sys$ ./spaces2tabs in.txt out.txt
+MacBook-Neo-Artem:pract1_3 sys$ cat -A out.txt
+cat: illegal option -- A
+usage: cat [-belnstuv] [file ...]
+MacBook-Neo-Artem:pract1_3 sys$ cat -et out.txt
+a^Ib^Ic$
+MacBook-Neo-Artem:pract1_3 sys$ 
+
+
+Задание №10
+MacBook-Neo-Artem:pract1_3 sys$ cat > empty_text <<'EOF'
+> #!/usr/bin/env bash
+> if [ $# -ne 1 ]; then
+>     echo "Использование: $0 <директория>" >&2
+>     exit 1
+> fi
+> dir="$1"
+> find "$dir" -type f -empty -print0 |
+> while IFS= read -r -d '' file; do
+>     case "$file" in
+>         *.txt|*.md|*.c|*.h|*.cpp|*.py|*.js|*.java|*.html|*.css|*.json|*.xml|*.sh|*.log|*.conf|*.cfg|*.ini)
+>             echo "$file" ;;
+>     esac
+> done
+> EOF
+MacBook-Neo-Artem:pract1_3 sys$ 
+MacBook-Neo-Artem:pract1_3 sys$ chmod +x empty_text
+MacBook-Neo-Artem:pract1_3 sys$ mkdir -p test10 && cd test10
+MacBook-Neo-Artem:test10 sys$ touch a.txt b.md c.bin
+MacBook-Neo-Artem:test10 sys$ echo "not empty" > d.txt
+MacBook-Neo-Artem:test10 sys$ cd ..
+MacBook-Neo-Artem:pract1_3 sys$ ./empty_text test10
+test10/b.md
+test10/a.txt
+MacBook-Neo-Artem:pract1_3 sys$ 
+
+
+
+
