@@ -1,0 +1,2 @@
+Hello from VFS!
+This is a test file.

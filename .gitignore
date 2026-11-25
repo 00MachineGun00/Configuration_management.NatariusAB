@@ -1,0 +1,26 @@
+# Python кэш
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальное окружение
+.venv/
+venv/
+env/
+
+# Артефакты тестирования
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Настройки IDE
+.vscode/
+.idea/
+*.swp
+
+# macOS мусор
+.DS_Store
+.AppleDouble
+
+# Логи и временные файлы
+*.log
